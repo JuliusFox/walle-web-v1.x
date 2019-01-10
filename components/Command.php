@@ -102,9 +102,8 @@ class Command
 
         foreach (GlobalHelper::str2arr($this->getConfig()->hosts) as $remoteHost) {
 
-            $localCommand = sprintf('ssh %s -p %d -q -o UserKnownHostsFile=/dev/null -o StrictHostKeyChecking=no -o CheckHostIP=false %s@%s %s',
-                $needTTY, $this->getHostPort($remoteHost), escapeshellarg($this->getConfig()->release_user),
-                escapeshellarg($this->getHostName($remoteHost)), escapeshellarg($command));
+            $localCommand = sprintf('ssh %s -q -o UserKnownHostsFile=/dev/null -o StrictHostKeyChecking=no -o CheckHostIP=false %s %s',
+                $needTTY, escapeshellarg($this->getHostName($remoteHost)), escapeshellarg($command));
 
             if ($delay > 0) {
                 // 每台机器延迟执行post_release任务间隔, 不推荐使用, 仅当业务无法平滑重启时使用
